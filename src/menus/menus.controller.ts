@@ -1,0 +1,69 @@
+import { Request, Response } from "express";
+import { MenusService } from "./menus.service";
+
+export class MenusController {
+  public static async create(req: Request, res: Response) {
+    try {
+      // validate(req.body, { skipMissingProperties: true });
+
+      const menu = await MenusService.create(req.body);
+
+      res.status(201).send(menu);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  public static async findAll(req: Request, res: Response) {
+    try {
+      const menus = await MenusService.findAll();
+
+      res.send(menus);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  public static async findByArray(req: Request, res: Response) {
+    try {
+      const ids: string[] = req.params.ids.split(",");
+      const dishes = await MenusService.findByArray(ids);
+
+      res.send(dishes);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  public static async findOne(req: Request, res: Response) {
+    try {
+      const menu = await MenusService.findOne(req.params.id);
+
+      res.send(menu);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  public static async update(req: Request, res: Response) {
+    try {
+      // validate(req.body, { skipMissingProperties: true });
+
+      const menu = await MenusService.update(req.params.id, req.body);
+
+      res.send(menu);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  public static async remove(req: Request, res: Response) {
+    try {
+      await MenusService.remove(req.params.id);
+
+      res.send("Menu deleted");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
