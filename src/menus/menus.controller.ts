@@ -1,69 +1,73 @@
-import { Request, Response } from "express";
-import { MenusService } from "./menus.service";
+import { Request, Response } from "express"
+import { Types } from "mongoose"
+import { MenusService } from "./menus.service"
 
 export class MenusController {
   public static async create(req: Request, res: Response) {
     try {
       // validate(req.body, { skipMissingProperties: true });
 
-      const menu = await MenusService.create(req.body);
+      const menu = await MenusService.create(req.body)
 
-      res.status(201).send(menu);
+      res.status(201).send(menu)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   }
 
   public static async findAll(req: Request, res: Response) {
     try {
-      const menus = await MenusService.findAll();
+      const menus = await MenusService.findAll()
 
-      res.send(menus);
+      res.send(menus)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   }
 
   public static async findByArray(req: Request, res: Response) {
     try {
-      const ids: string[] = req.params.ids.split(",");
-      const dishes = await MenusService.findByArray(ids);
+      const ids: Types.ObjectId[] = req.params.ids
+        .split(",")
+        .map((id) => new Types.ObjectId(id))
+      const dishes = await MenusService.findByArray(ids)
 
-      res.send(dishes);
+      res.send(dishes)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   }
 
   public static async findOne(req: Request, res: Response) {
     try {
-      const menu = await MenusService.findOne(req.params.id);
+      const id = new Types.ObjectId(req.params.id)
+      const menu = await MenusService.findOne(id)
 
-      res.send(menu);
+      res.send(menu)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   }
 
   public static async update(req: Request, res: Response) {
     try {
-      // validate(req.body, { skipMissingProperties: true });
+      const id = new Types.ObjectId(req.params.id)
+      const menu = await MenusService.update(id, req.body)
 
-      const menu = await MenusService.update(req.params.id, req.body);
-
-      res.send(menu);
+      res.send(menu)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   }
 
   public static async remove(req: Request, res: Response) {
     try {
-      await MenusService.remove(req.params.id);
+      const id = new Types.ObjectId(req.params.id)
+      await MenusService.remove(id)
 
-      res.send("Menu deleted");
+      res.send("Menu deleted")
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   }
 }
