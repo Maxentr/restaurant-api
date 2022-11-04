@@ -2,7 +2,6 @@ import { z } from "zod"
 import { objectId, ParamIdSchema } from "../../../utils/generic-schema"
 import { StockType } from "../ingredients.schema"
 
-// Update ingredient
 const UpdateIngredientBody = z.object({
   name: z.string().optional(),
   description: z.string().optional(),

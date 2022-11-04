@@ -1,7 +1,6 @@
 import { z } from "zod"
 import { StockType } from "../ingredients.schema"
 
-// Create ingredient
 const CreateIngredientBody = z.object({
   name: z.string(),
   description: z.string().optional(),
