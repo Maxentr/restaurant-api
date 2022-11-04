@@ -1,11 +1,10 @@
 import { Request, Response } from "express"
+import { Types } from "mongoose"
 import { IngredientsService } from "./ingredients.service"
 
 export class IngredientsController {
   public static async create(req: Request, res: Response) {
     try {
-      // validate(req.body, { skipMissingProperties: true });
-
       const ingredient = await IngredientsService.create(req.body)
 
       res.status(201).send(ingredient)
@@ -36,7 +35,8 @@ export class IngredientsController {
 
   public static async findOne(req: Request, res: Response) {
     try {
-      const ingredient = await IngredientsService.findOne(req.params.id)
+      const id = new Types.ObjectId(req.params.id)
+      const ingredient = await IngredientsService.findOne(id)
 
       res.send(ingredient)
     } catch (error) {
@@ -46,12 +46,8 @@ export class IngredientsController {
 
   public static async update(req: Request, res: Response) {
     try {
-      // validate(req.body, { skipMissingProperties: true });
-
-      const ingredient = await IngredientsService.update(
-        req.params.id,
-        req.body,
-      )
+      const id = new Types.ObjectId(req.params.id)
+      const ingredient = await IngredientsService.update(id, req.body)
 
       res.send(ingredient)
     } catch (error) {
@@ -61,7 +57,8 @@ export class IngredientsController {
 
   public static async remove(req: Request, res: Response) {
     try {
-      await IngredientsService.remove(req.params.id)
+      const id = new Types.ObjectId(req.params.id)
+      await IngredientsService.remove(id)
 
       res.send("Ingredient deleted")
     } catch (error) {

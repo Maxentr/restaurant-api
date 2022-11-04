@@ -1,12 +1,12 @@
-// import { CreateIngredientDto } from "./dto/create-ingredient.dto";
-// import { UpdateIngredientDto } from "./dto/update-ingredient.dto";
+import { CreateIngredient } from "./validations/create-ingredient"
+import { UpdateIngredient } from "./validations/update-ingredient"
 import { Ingredient } from "./ingredients.schema"
+import { Types } from "mongoose"
 
 export class IngredientsService {
-  public static async create(createRequest: any /* CreateIngredientDto */) {
+  public static async create(createRequest: CreateIngredient) {
     return await Ingredient.create({
       ...createRequest,
-      category: createRequest.category.toLowerCase(),
       createdAt: new Date(),
       updatedAt: new Date(),
     })
@@ -20,27 +20,25 @@ export class IngredientsService {
     return await Ingredient.distinct("stockType").exec()
   }
 
-  public static async findOne(id: string) {
+  public static async findOne(id: Types.ObjectId) {
     return await Ingredient.findById(id).exec()
   }
 
   public static async update(
-    id: string,
-    updateRequest: any /* UpdateIngredientDto */,
+    id: Types.ObjectId,
+    updateRequest: UpdateIngredient,
   ) {
     return await Ingredient.findByIdAndUpdate(
       id,
       {
         ...updateRequest,
-        category:
-          updateRequest.category && updateRequest.category.toLowerCase(),
         updatedAt: new Date(),
       },
       { new: true },
     ).exec()
   }
 
-  public static async remove(id: string) {
+  public static async remove(id: Types.ObjectId) {
     return await Ingredient.findByIdAndDelete(id).exec()
   }
 }
