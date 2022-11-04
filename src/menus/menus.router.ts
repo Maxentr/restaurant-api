@@ -7,15 +7,24 @@ import { UpdateMenuSchema } from "./validations/update-menu"
 
 const menusRouter = express.Router()
 
+// Create
 menusRouter.post("/", validate(CreateMenuSchema), MenusController.create)
+
+// Read all
 menusRouter.get("/", MenusController.findAll)
 menusRouter.get(
   "/array/:ids",
   validate(RouteIdsSchema),
   MenusController.findByArray,
 )
+
+// Read one
 menusRouter.get("/:id", validate(RouteIdSchema), MenusController.findOne)
+
+// Update
 menusRouter.patch("/:id", validate(UpdateMenuSchema), MenusController.update)
+
+// Delete
 menusRouter.delete("/:id", validate(RouteIdSchema), MenusController.remove)
 
 export default menusRouter
