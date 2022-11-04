@@ -1,10 +1,10 @@
-// import { CreateDishDto } from "./dto/create-dishes.dto";
-// import { UpdateDishDto } from "./dto/update-dishes.dto";
 import { Types } from "mongoose"
 import { Dish } from "./dishes.schema"
+import { CreateDish } from "./validations/create-dish"
+import { UpdateDish } from "./validations/update-dish"
 
 export class DishesService {
-  public static async create(createRequest: any /*CreateDishDto*/) {
+  public static async create(createRequest: CreateDish) {
     return await Dish.create({
       ...createRequest,
       createdAt: new Date(),
@@ -16,15 +16,15 @@ export class DishesService {
     return await Dish.find().exec()
   }
 
-  public static async findByArray(ids: string[]) {
+  public static async findByArray(ids: Types.ObjectId[]) {
     return await Dish.find({ _id: { $in: ids } }).exec()
   }
 
-  public static async findOne(id: string) {
+  public static async findOne(id: Types.ObjectId) {
     return await Dish.findById(id).exec()
   }
 
-  public static async update(id: string, updateRequest: any /*UpdateDishDto*/) {
+  public static async update(id: Types.ObjectId, updateRequest: UpdateDish) {
     return await Dish.findByIdAndUpdate(
       id,
       {
@@ -35,7 +35,7 @@ export class DishesService {
     ).exec()
   }
 
-  public static async remove(id: string) {
+  public static async remove(id: Types.ObjectId) {
     return await Dish.findByIdAndDelete(id).exec()
   }
 }
