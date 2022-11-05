@@ -7,6 +7,9 @@ import express, {
   NextFunction,
 } from "express"
 import * as http from "http"
+import { config } from "dotenv"
+
+config()
 
 class Server {
   private readonly _app: Express
@@ -43,7 +46,9 @@ class Server {
 
   private async connectMongoDB() {
     try {
-      await connect("mongodb://localhost:27017/Gestion_stock")
+      await connect(
+        `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
+      )
       console.log("🔌 Connected to MongoDB")
     } catch (error) {
       console.log(error)
