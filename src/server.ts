@@ -8,6 +8,7 @@ import express, {
 } from "express"
 import * as http from "http"
 import { config } from "dotenv"
+import cookieParser from "cookie-parser"
 
 config()
 
@@ -32,6 +33,7 @@ class Server {
     this._app.use(express.json())
     this._app.use(this.allowCrossDomain)
     this._app.use(urlencoded({ extended: true }))
+    this._app.use(cookieParser())
 
     this._app.set("port", process.env.PORT || 3000)
   }

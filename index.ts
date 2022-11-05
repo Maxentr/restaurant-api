@@ -6,6 +6,7 @@ import dishesRouter from "./src/dishes/dishes.router"
 import drinksRouter from "./src/drinks/drinks.router"
 import menusRouter from "./src/menus/menus.router"
 import usersRouter from "./src/users/users.router"
+import authRouter from "./src/auth/auth.router"
 
 server.start()
 const app = server.app
@@ -14,6 +15,7 @@ const api = Router()
 // Routes V1
 const routerV1 = Router()
 
+routerV1.use("/auth", authRouter)
 routerV1.use("/ingredients", ingredientsRouter)
 routerV1.use("/dishes", dishesRouter)
 routerV1.use("/drinks", drinksRouter)
