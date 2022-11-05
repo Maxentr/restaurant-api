@@ -5,8 +5,6 @@ import { MenusService } from "./menus.service"
 export class MenusController {
   public static async create(req: Request, res: Response) {
     try {
-      // validate(req.body, { skipMissingProperties: true });
-
       const menu = await MenusService.create(req.body)
 
       res.status(201).send(menu)

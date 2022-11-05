@@ -18,7 +18,6 @@ export class MenusService {
       .populate("asides.aside")
       .populate("drinks.drink")
       .exec()
-    console.log(menus[0].dishes)
     return menus
   }
 
