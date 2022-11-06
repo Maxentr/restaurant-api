@@ -24,4 +24,5 @@ const UpdateDishSchema = z.object({
 
 type UpdateDish = z.infer<typeof UpdateDishBody>
 
-export { UpdateDishSchema, UpdateDish }
+export type { UpdateDish }
+export { UpdateDishSchema }

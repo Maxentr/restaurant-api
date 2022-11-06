@@ -16,4 +16,5 @@ const CreateIngredientSchema = z.object({
 
 type CreateIngredient = z.infer<typeof CreateIngredientBody>
 
-export { CreateIngredientSchema, CreateIngredient }
+export type { CreateIngredient }
+export { CreateIngredientSchema }

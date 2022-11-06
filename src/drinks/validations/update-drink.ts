@@ -24,4 +24,5 @@ const UpdateDrinkSchema = z.object({
 
 type UpdateDrink = z.infer<typeof UpdateDrinkBody>
 
-export { UpdateDrinkSchema, UpdateDrink }
+export type { UpdateDrink }
+export { UpdateDrinkSchema }

@@ -19,4 +19,5 @@ const UpdateMenuSchema = z.object({
 
 type UpdateMenu = z.infer<typeof UpdateMenuBody>
 
-export { UpdateMenuSchema, UpdateMenu }
+export type { UpdateMenu }
+export { UpdateMenuSchema }

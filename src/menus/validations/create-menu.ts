@@ -18,7 +18,5 @@ const CreateMenuSchema = z.object({
 
 type CreateMenu = z.infer<typeof CreateMenuBody>
 
-export {
-  CreateMenuSchema,
-  CreateMenu,
-}
+export type { CreateMenu }
+export { CreateMenuSchema }

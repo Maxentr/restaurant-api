@@ -25,4 +25,5 @@ const UpdateUserSchema = z.object({
 
 type UpdateUser = z.infer<typeof UpdateUserBody>
 
-export { UpdateUserSchema, UpdateUser }
+export type { UpdateUser }
+export { UpdateUserSchema }

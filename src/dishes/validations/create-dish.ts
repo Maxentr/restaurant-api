@@ -21,4 +21,5 @@ const CreateDishSchema = z.object({
 
 type CreateDish = z.infer<typeof CreateDishBody>
 
-export { CreateDishSchema, CreateDish }
+export type { CreateDish }
+export { CreateDishSchema }

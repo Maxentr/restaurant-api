@@ -21,4 +21,5 @@ const UpdateIngredientSchema = z.object({
 
 type UpdateIngredient = z.infer<typeof UpdateIngredientBody>
 
-export { UpdateIngredientSchema, UpdateIngredient }
+export type { UpdateIngredient }
+export { UpdateIngredientSchema }

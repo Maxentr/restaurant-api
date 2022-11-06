@@ -11,4 +11,5 @@ const LoginSchema = z.object({
 
 type Login = z.infer<typeof LoginBody>
 
-export { LoginSchema, Login }
+export type { Login }
+export { LoginSchema }

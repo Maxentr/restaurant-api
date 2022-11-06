@@ -22,4 +22,5 @@ const CreateOrderSchema = z.object({
 
 type CreateOrder = z.infer<typeof CreateOrderBody>
 
-export { CreateOrderSchema, CreateOrder }
+export type { CreateOrder }
+export { CreateOrderSchema }
