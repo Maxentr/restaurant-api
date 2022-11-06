@@ -32,9 +32,9 @@ export class UsersController {
       const ids: Types.ObjectId[] = req.params.ids
         .split(",")
         .map((id) => new Types.ObjectId(id))
-      const dishes = await UsersService.findByArray(ids)
+      const users = await UsersService.findByArray(ids)
 
-      res.send(dishes)
+      res.send(users)
     } catch (error) {
       console.log(error)
     }
