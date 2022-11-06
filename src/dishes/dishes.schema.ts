@@ -19,18 +19,20 @@ export type Dish = {
   updatedAt: Date
 }
 
+// Mongooose schema
+// This is an equivalent of Typescript types above
+const DishIngredientSchema = new Schema<DishIngredient>({
+  id: { type: Schema.Types.ObjectId, ref: Ingredient, required: true },
+  quantity: { type: Number, required: true },
+})
+
 const dishesSchema = new Schema<Dish>({
   name: { type: String, required: true },
-  description: String,
+  description: { type: String, required: true },
   price: { type: Number, required: true },
   image: String,
   category: String,
-  ingredients: [
-    {
-      id: { type: Types.ObjectId, ref: Ingredient, required: true },
-      quantity: Number,
-    },
-  ],
+  ingredients: { type: [DishIngredientSchema], required: true },
   createdAt: { type: Date, required: true },
   updatedAt: { type: Date, required: true },
 })

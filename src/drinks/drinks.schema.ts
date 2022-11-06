@@ -18,19 +18,21 @@ export type Drink = {
   updatedAt: Date
 }
 
+// Mongooose schema
+// This is an equivalent of Typescript types above
+const DrinkStockSizeSchema = new Schema<DrinkStockSize>({
+  name: { type: String, required: true },
+  price: { type: Number, required: true },
+  quantity: { type: Number, required: true },
+})
+
 const drinksSchema = new Schema<Drink>({
   name: { type: String, required: true },
-  description: { type: String, required: false },
+  description: { type: String, required: true },
   image: String,
-  stockLeft: { type: Number, required: false },
+  stockLeft: { type: Number, required: true },
   size: {
-    type: [
-      {
-        name: { type: String, required: true },
-        price: { type: Number, required: true },
-        quantity: { type: Number, required: true },
-      },
-    ],
+    type: [DrinkStockSizeSchema],
     required: true,
   },
   createdAt: { type: Date, required: true },

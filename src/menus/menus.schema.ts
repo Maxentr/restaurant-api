@@ -7,7 +7,7 @@ type MenuChoice = {
   extraCost?: number
 }
 
-export type MenuDrinkChoice = {
+export type MenuDrinkChoice = MenuChoice & {
   drink: Types.ObjectId
   size: Types.ObjectId
 }
@@ -33,30 +33,42 @@ export type Menu = {
   updatedAt: Date
 }
 
+// Mongooose schema
+// This is an equivalent of Typescript types above
+const MenuChoiceSchema = new Schema<MenuChoice>({
+  extraCost: { type: Number, required: false },
+})
+const MenuDrinkChoiceSchema = new Schema<MenuDrinkChoice>({
+  drink: { type: Schema.Types.ObjectId, ref: Drink, required: true },
+  size: { type: Schema.Types.ObjectId, required: true },
+  extraCost: MenuChoiceSchema,
+})
+const MenuDishChoiceSchema = new Schema<MenuDishChoice>({
+  dish: { type: Schema.Types.ObjectId, ref: Dish, required: true },
+  extraCost: MenuChoiceSchema,
+})
+const MenuAsideChoiceSchema = new Schema<MenuAsideChoice>({
+  aside: { type: Schema.Types.ObjectId, ref: Dish, required: true },
+  extraCost: MenuChoiceSchema,
+})
+
 const menusSchema = new Schema<Menu>({
   name: { type: String, required: true },
-  description: String,
+  description: { type: String, required: true },
   image: String,
   price: { type: Number, required: true },
-  dishes: [
-    {
-      dish: { type: Types.ObjectId, ref: Dish, required: true },
-      extraCost: Number,
-    },
-  ],
-  asides: [
-    {
-      aside: { type: Types.ObjectId, ref: Dish, required: true },
-      extraCost: Number,
-    },
-  ],
-  drinks: [
-    {
-      drink: { type: Types.ObjectId, ref: Drink, required: true },
-      size: { type: Types.ObjectId, required: true },
-      extraCost: Number,
-    },
-  ],
+  dishes: {
+    type: [MenuDishChoiceSchema],
+    required: true,
+  },
+  asides: {
+    type: [MenuAsideChoiceSchema],
+    required: true,
+  },
+  drinks: {
+    type: [MenuDrinkChoiceSchema],
+    required: true,
+  },
   createdAt: { type: Date, required: true },
   updatedAt: { type: Date, required: true },
 })

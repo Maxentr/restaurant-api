@@ -19,6 +19,8 @@ export type Ingredient = {
   updatedAt: Date
 }
 
+// Mongooose schema
+// This is an equivalent of Typescript types above
 const ingredientsSchema = new Schema<Ingredient>({
   name: { type: String, required: true },
   description: String,
