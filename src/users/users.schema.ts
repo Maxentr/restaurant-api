@@ -2,7 +2,7 @@ import { Schema, model, Types } from "mongoose"
 
 export enum Role {
   ADMIN = "ADMIN",
-  USER = "USER",
+  CUSTOMER = "CUSTOMER",
 }
 
 export type User = {
@@ -19,7 +19,7 @@ const usersSchema = new Schema<User>({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true, select: false, min: 8 },
-  role: { type: String, enum: Role, default: Role.USER, required: false },
+  role: { type: String, enum: Role, default: Role.CUSTOMER, required: false },
   createdAt: { type: Date, required: true },
   updatedAt: { type: Date, required: true },
 })
