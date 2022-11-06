@@ -30,6 +30,13 @@ export class UsersService {
     return await User.findById(id).exec()
   }
 
+  // Use only for authentification method
+  public static async findOneAuthentification(email: string) {
+    return await User.findOne({ email })
+      .select(["name", "email", "password", "role"])
+      .exec()
+  }
+
   public static async isEmailTaken(email: string) {
     return await User.exists({ email }).exec()
   }
