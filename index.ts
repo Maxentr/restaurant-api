@@ -7,6 +7,7 @@ import drinksRouter from "./src/drinks/drinks.router"
 import menusRouter from "./src/menus/menus.router"
 import usersRouter from "./src/users/users.router"
 import authRouter from "./src/auth/auth.router"
+import ordersRouter from "./src/orders/orders.router"
 
 server.start()
 const app = server.app
@@ -21,6 +22,7 @@ routerV1.use("/dishes", dishesRouter)
 routerV1.use("/drinks", drinksRouter)
 routerV1.use("/menus", menusRouter)
 routerV1.use("/users", usersRouter)
+routerV1.use("/orders", ordersRouter)
 
 // Add versionning to api routes
 api.use("/v1", routerV1)
