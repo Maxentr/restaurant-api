@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose"
+import { Schema, model, Types } from "mongoose"
 
 export enum Role {
   ADMIN = "ADMIN",
@@ -6,10 +6,11 @@ export enum Role {
 }
 
 export type User = {
+  _id: Types.ObjectId
   name: string
   email: string
   password: string
-  role?: Role
+  role: Role
   createdAt: Date
   updatedAt: Date
 }

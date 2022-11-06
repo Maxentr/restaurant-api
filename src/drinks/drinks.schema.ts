@@ -1,20 +1,22 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Types } from "mongoose"
 
 export type DrinkStockSize = {
-  name: string;
-  price: number;
-  quantity: number;
-};
+  _id: Types.ObjectId
+  name: string
+  price: number
+  quantity: number
+}
 
 export type Drink = {
-  name: string;
-  description: string;
-  image?: string;
-  stockLeft: number;
-  size: DrinkStockSize[];
-  createdAt: Date;
-  updatedAt: Date;
-};
+  _id: Types.ObjectId
+  name: string
+  description: string
+  image?: string
+  stockLeft: number
+  size: DrinkStockSize[]
+  createdAt: Date
+  updatedAt: Date
+}
 
 const drinksSchema = new Schema<Drink>({
   name: { type: String, required: true },
@@ -33,6 +35,6 @@ const drinksSchema = new Schema<Drink>({
   },
   createdAt: { type: Date, required: true },
   updatedAt: { type: Date, required: true },
-});
+})
 
-export const Drink = model<Drink>("drinks", drinksSchema);
+export const Drink = model<Drink>("drinks", drinksSchema)

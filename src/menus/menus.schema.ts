@@ -2,23 +2,26 @@ import { Schema, model, Types } from "mongoose"
 import { Dish } from "../dishes/dishes.schema"
 import { Drink } from "../drinks/drinks.schema"
 
+type MenuChoice = {
+  _id: Types.ObjectId
+  extraCost?: number
+}
+
 export type MenuDrinkChoice = {
   drink: Types.ObjectId
   size: Types.ObjectId
-  extraCost?: number
 }
 
-export type MenuDishChoice = {
+export type MenuDishChoice = MenuChoice & {
   dish: Types.ObjectId
-  extraCost?: number
 }
 
-export type MenuAsideChoice = {
+export type MenuAsideChoice = MenuChoice & {
   aside: Types.ObjectId
-  extraCost?: number
 }
 
 export type Menu = {
+  _id: Types.ObjectId
   name: string
   description: string
   image?: string

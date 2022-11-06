@@ -2,11 +2,13 @@ import { Schema, model, Types } from "mongoose"
 import { Ingredient } from "../ingredients/ingredients.schema"
 
 export type DishIngredient = {
+  _id: Types.ObjectId
   id: Types.ObjectId
   quantity: number
 }
 
 export type Dish = {
+  _id: Types.ObjectId
   name: string
   description: string
   price: number
