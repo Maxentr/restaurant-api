@@ -14,18 +14,18 @@ const RouteIdSchema = z.object({
   params: ParamIdSchema,
 })
 
-const ParamIdsSchema = z.object({
-  id: z.array(objectId),
+const BodyIdsSchema = z.object({
+  ids: z.array(objectId),
 })
 
 const RouteIdsSchema = z.object({
-  params: ParamIdsSchema,
+  body: BodyIdsSchema,
 })
 
 export {
   objectId,
   ParamIdSchema,
   RouteIdSchema,
-  ParamIdsSchema,
+  BodyIdsSchema,
   RouteIdsSchema,
 }
