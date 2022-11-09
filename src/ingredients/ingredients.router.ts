@@ -4,12 +4,14 @@ import { UpdateIngredientSchema } from "./validations/update-ingredient"
 import { IngredientsController } from "./ingredients.controller"
 import { CreateIngredientSchema } from "./validations/create-ingredient"
 import { RouteIdSchema } from "../../utils/generic-schema"
+import Auth from "../auth/auth.middleware"
 
 const ingredientsRouter = Router()
 
 // Create
 ingredientsRouter.post(
   "/",
+  Auth("ADMIN"),
   validate(CreateIngredientSchema),
   IngredientsController.create,
 )
@@ -28,6 +30,7 @@ ingredientsRouter.get(
 // Update
 ingredientsRouter.patch(
   "/:id",
+  Auth("ADMIN"),
   validate(UpdateIngredientSchema),
   IngredientsController.update,
 )
@@ -35,6 +38,7 @@ ingredientsRouter.patch(
 // Delete
 ingredientsRouter.delete(
   "/:id",
+  Auth("ADMIN"),
   validate(RouteIdSchema),
   IngredientsController.remove,
 )

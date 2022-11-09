@@ -1,6 +1,7 @@
 import express from "express"
 import { RouteIdSchema, RouteIdsSchema } from "../../utils/generic-schema"
 import { validate } from "../../utils/validation"
+import Auth from "../auth/auth.middleware"
 import { DrinksController } from "./drinks.controller"
 import { CreateDrinkSchema } from "./validations/create-drink"
 import { UpdateDrinkSchema } from "./validations/update-drink"
@@ -8,7 +9,12 @@ import { UpdateDrinkSchema } from "./validations/update-drink"
 const drinksRouter = express.Router()
 
 // Create
-drinksRouter.post("/", validate(CreateDrinkSchema), DrinksController.create)
+drinksRouter.post(
+  "/",
+  Auth("ADMIN"),
+  validate(CreateDrinkSchema),
+  DrinksController.create,
+)
 
 // Read all
 drinksRouter.get("/", DrinksController.findAll)
@@ -22,9 +28,19 @@ drinksRouter.post(
 drinksRouter.get("/:id", validate(RouteIdSchema), DrinksController.findOne)
 
 // Update
-drinksRouter.patch("/:id", validate(UpdateDrinkSchema), DrinksController.update)
+drinksRouter.patch(
+  "/:id",
+  Auth("ADMIN"),
+  validate(UpdateDrinkSchema),
+  DrinksController.update,
+)
 
 // Delete
-drinksRouter.delete("/:id", validate(RouteIdSchema), DrinksController.remove)
+drinksRouter.delete(
+  "/:id",
+  Auth("ADMIN"),
+  validate(RouteIdSchema),
+  DrinksController.remove,
+)
 
 export default drinksRouter

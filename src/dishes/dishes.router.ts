@@ -1,13 +1,19 @@
 import { Router } from "express"
 import { RouteIdSchema, RouteIdsSchema } from "../../utils/generic-schema"
 import { validate } from "../../utils/validation"
+import Auth from "../auth/auth.middleware"
 import { DishesController } from "./dishes.controller"
 import { CreateDishSchema } from "./validations/create-dish"
 
 const dishesRouter = Router()
 
 // Create
-dishesRouter.post("/", validate(CreateDishSchema), DishesController.create)
+dishesRouter.post(
+  "/",
+  Auth("ADMIN"),
+  validate(CreateDishSchema),
+  DishesController.create,
+)
 
 // Read all
 dishesRouter.get("/", DishesController.findAll)
@@ -21,9 +27,19 @@ dishesRouter.post(
 dishesRouter.get("/:id", validate(RouteIdSchema), DishesController.findOne)
 
 // Update
-dishesRouter.patch("/:id", validate(RouteIdSchema), DishesController.update)
+dishesRouter.patch(
+  "/:id",
+  Auth("ADMIN"),
+  validate(RouteIdSchema),
+  DishesController.update,
+)
 
 // Delete
-dishesRouter.delete("/:id", validate(RouteIdSchema), DishesController.remove)
+dishesRouter.delete(
+  "/:id",
+  Auth("ADMIN"),
+  validate(RouteIdSchema),
+  DishesController.remove,
+)
 
 export default dishesRouter
