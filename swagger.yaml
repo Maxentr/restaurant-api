@@ -1,0 +1,1144 @@
+openapi: 3.0.3
+info:
+  title: Restaurant API
+  description: API to manage restaurants
+  version: 1.0.0
+host: localhost:3000
+basePath: /api/v1
+servers: [{ url: "/api/v1" }]
+schemes:
+  - http
+paths:
+  /auth/login:
+    post:
+      summary: Login
+      description: Login to the system
+      operationId: login
+      tags:
+        - auth
+      requestBody:
+        description: Login credentials
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/body/auth/login"
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                accessToken: string
+  /auth/refresh:
+    post:
+      summary: Refresh the accessToken using the refreshToken (cookie)
+      description: Refresh the accessToken using the refreshToken (cookie)
+      operationId: refresh
+      tags:
+        - auth
+      responses:
+        "200":
+          description: Refresh successful
+          content:
+            application/json:
+              schema:
+                accessToken: string
+
+  /users:
+    post:
+      security:
+        - BearerAuth: [admin]
+      tags:
+        - users
+      summary: Create user
+      description: Create user
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/body/user/createUser"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+    get:
+      security:
+        - BearerAuth: [admin]
+      tags:
+        - users
+      summary: Get all users
+      description: Get all users
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+  /users/{id}:
+    get:
+      security:
+        - BearerAuth: [customer, admin]
+      tags:
+        - users
+      summary: Get user by id
+      description: Get user by id
+      parameters:
+        - name: id
+          in: path
+          description: ID of user to return
+          required: true
+          schema:
+            $ref: "#/components/common/_id"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+    patch:
+      security:
+        - BearerAuth: [admin]
+      tags:
+        - users
+      summary: Update user by id
+      description: Update user by id
+      parameters:
+        - name: id
+          in: path
+          description: ID of user to return
+          required: true
+          schema:
+            $ref: "#/components/common/_id"
+      requestBody:
+        description: Updated user object
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/body/user/updateUser"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+    delete:
+      security:
+        - BearerAuth: [admin]
+      tags:
+        - users
+      summary: Delete user by id
+      description: Delete user by id
+      parameters:
+        - name: id
+          in: path
+          description: ID of user to return
+          required: true
+          schema:
+            $ref: "#/components/common/_id"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+  /orders:
+    post:
+      security:
+        - BearerAuth: [customer, admin]
+      tags:
+        - orders
+      summary: Create order
+      description: Create order
+      requestBody:
+        description: Created order object
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/body/order/createOrder"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+    get:
+      security:
+        - BearerAuth: [admin]
+      tags:
+        - orders
+      summary: Get all orders
+      description: Get all orders
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+  /orders/customer/{id}:
+    get:
+      security:
+        - BearerAuth: [customer, admin]
+      tags:
+        - orders
+      summary: Get all orders by customer id
+      description: Get all orders by customer id
+      parameters:
+        - name: id
+          in: path
+          description: ID of customer to return orders
+          required: true
+          schema:
+            $ref: "#/components/common/_id"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+  /orders/{id}:
+    get:
+      security:
+        - BearerAuth: [customer, admin]
+      tags:
+        - orders
+      summary: Get order by id
+      description: Get order by id
+      parameters:
+        - name: id
+          in: path
+          description: ID of order to return
+          required: true
+          schema:
+            $ref: "#/components/common/_id"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+
+  /menus:
+    post:
+      security:
+        - BearerAuth: [admin]
+      tags:
+        - menus
+      summary: Create menu
+      description: Create menu
+      requestBody:
+        description: Created menu object
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/body/menu/createMenu"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Menu"
+    get:
+      tags:
+        - menus
+      summary: Get all menus
+      description: Get all menus
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Menu"
+  /menus/array:
+    post:
+      tags:
+        - menus
+      summary: get menus by ids
+      description: get menus by ids
+      requestBody:
+        description: get menus by ids
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/body/menu/getMenus"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Menu"
+  /menus/{id}:
+    get:
+      tags:
+        - menus
+      summary: Get menu by id
+      description: Get menu by id
+      parameters:
+        - name: id
+          in: path
+          description: ID of menu to return
+          required: true
+          schema:
+            $ref: "#/components/common/_id"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Menu"
+    patch:
+      security:
+        - BearerAuth: [admin]
+      tags:
+        - menus
+      summary: Update menu by id
+      description: Update menu by id
+      parameters:
+        - name: id
+          in: path
+          description: ID of menu to return
+          required: true
+          schema:
+            $ref: "#/components/common/_id"
+      requestBody:
+        description: Updated menu object
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/body/menu/updateMenu"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Menu"
+    delete:
+      security:
+        - BearerAuth: [admin]
+      tags:
+        - menus
+      summary: Delete menu by id
+      description: Delete menu by id
+      parameters:
+        - name: id
+          in: path
+          description: ID of menu to return
+          required: true
+          schema:
+            $ref: "#/components/common/_id"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Menu"
+
+  /ingredients:
+    post:
+      security:
+        - BearerAuth: [admin]
+      tags:
+        - ingredients
+      summary: Create ingredient
+      description: Create ingredient
+      requestBody:
+        description: Created ingredient object
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/body/ingredient/createIngredient"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ingredient"
+    get:
+      tags:
+        - ingredients
+      summary: Get all ingredients
+      description: Get all ingredients
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ingredient"
+  /ingredients/stock-type:
+    get:
+      tags:
+        - ingredients
+      summary: Get all stock types used in ingredients
+      description: Get stock types used in ingredients
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Ingredient/properties/stockType"
+  /ingredients/{id}:
+    get:
+      tags:
+        - ingredients
+      summary: Get ingredient by id
+      description: Get ingredient by id
+      parameters:
+        - name: id
+          in: path
+          description: ID of ingredient to return
+          required: true
+          schema:
+            $ref: "#/components/common/_id"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ingredient"
+    patch:
+      security:
+        - BearerAuth: [admin]
+      tags:
+        - ingredients
+      summary: Update ingredient by id
+      description: Update ingredient by id
+      parameters:
+        - name: id
+          in: path
+          description: ID of ingredient to return
+          required: true
+          schema:
+            $ref: "#/components/common/_id"
+      requestBody:
+        description: Updated ingredient object
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/body/ingredient/updateIngredient"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ingredient"
+    delete:
+      security:
+        - BearerAuth: [admin]
+      tags:
+        - ingredients
+      summary: Delete ingredient by id
+      description: Delete ingredient by id
+      parameters:
+        - name: id
+          in: path
+          description: ID of ingredient to return
+          required: true
+          schema:
+            $ref: "#/components/common/_id"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ingredient"
+
+  /drinks:
+    post:
+      security:
+        - BearerAuth: [admin]
+      tags:
+        - drinks
+      summary: Create drink
+      description: Create drink
+      requestBody:
+        description: Created drink object
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/body/drink/createDrink"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Drink"
+    get:
+      tags:
+        - drinks
+      summary: Get all drinks
+      description: Get all drinks
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Drink"
+  /drinks/array:
+    post:
+      tags:
+        - drinks
+      summary: get drinks by ids
+      description: get drinks by ids
+      requestBody:
+        description: get drinks by ids
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/body/drink/getDrinks"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Drink"
+  /drinks/{id}:
+    get:
+      tags:
+        - drinks
+      summary: Get drink by id
+      description: Get drink by id
+      parameters:
+        - name: id
+          in: path
+          description: ID of drink to return
+          required: true
+          schema:
+            $ref: "#/components/common/_id"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Drink"
+    patch:
+      security:
+        - BearerAuth: [admin]
+      tags:
+        - drinks
+      summary: Update drink by id
+      description: Update drink by id
+      parameters:
+        - name: id
+          in: path
+          description: ID of drink to return
+          required: true
+          schema:
+            $ref: "#/components/common/_id"
+      requestBody:
+        description: Updated drink object
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/body/drink/updateDrink"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Drink"
+    delete:
+      security:
+        - BearerAuth: [admin]
+      tags:
+        - drinks
+      summary: Delete drink by id
+      description: Delete drink by id
+      parameters:
+        - name: id
+          in: path
+          description: ID of drink to return
+          required: true
+          schema:
+            $ref: "#/components/common/_id"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Drink"
+
+  /dishes:
+    post:
+      security:
+        - BearerAuth: [admin]
+      tags:
+        - dishes
+      summary: Create dish
+      description: Create dish
+      requestBody:
+        description: Created dish object
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/body/dish/createDish"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dish"
+    get:
+      tags:
+        - dishes
+      summary: Get all dishes
+      description: Get all dishes
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dish"
+  /dishes/array:
+    post:
+      tags:
+        - dishes
+      summary: get dishes by ids
+      description: get dishes by ids
+      requestBody:
+        description: get dishes by ids
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/body/dish/getDishes"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dish"
+  /dishes/{id}:
+    get:
+      tags:
+        - dishes
+      summary: Get dish by id
+      description: Get dish by id
+      parameters:
+        - name: id
+          in: path
+          description: ID of dish to return
+          required: true
+          schema:
+            $ref: "#/components/common/_id"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dish"
+    patch:
+      security:
+        - BearerAuth: [admin]
+      tags:
+        - dishes
+      summary: Update dish by id
+      description: Update dish by id
+      parameters:
+        - name: id
+          in: path
+          description: ID of dish to return
+          required: true
+          schema:
+            $ref: "#/components/common/_id"
+      requestBody:
+        description: Updated dish object
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/body/dish/updateDish"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dish"
+    delete:
+      security:
+        - BearerAuth: [admin]
+      tags:
+        - dishes
+      summary: Delete dish by id
+      description: Delete dish by id
+      parameters:
+        - name: id
+          in: path
+          description: ID of dish to return
+          required: true
+          schema:
+            $ref: "#/components/common/_id"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dish"
+
+components:
+  common:
+    _id:
+      type: string
+      length: 24
+      example: 63664c4d0637500420f16b07
+    createdAt:
+      type: string
+      format: date-time
+      example: "2022-11-09T08:48:01.453+00:00"
+    updatedAt:
+      type: string
+      format: date-time
+      example: "2022-11-09T08:50:04.133+00:00"
+
+  body:
+    auth:
+      login:
+        type: object
+        properties:
+          email:
+            type: string
+            format: email
+            example: "test@test.fr"
+          password:
+            type: string
+            format: password
+            minLength: 8
+            example: "aaaaaaaaa"
+    user:
+      createUser:
+        properties:
+          name:
+            $ref: "#/components/schemas/User/properties/name"
+          email:
+            $ref: "#/components/schemas/User/properties/email"
+          password:
+            $ref: "#/components/schemas/User/properties/password"
+          role:
+            $ref: "#/components/schemas/User/properties/role"
+      updateUser:
+        properties:
+          name:
+            $ref: "#/components/schemas/User/properties/name"
+            required: false
+          email:
+            $ref: "#/components/schemas/User/properties/email"
+            required: false
+          password:
+            $ref: "#/components/schemas/User/properties/password"
+            required: false
+          confirmPassword:
+            $ref: "#/components/schemas/User/properties/password"
+            required: false
+    order:
+      createOrder:
+        properties:
+          customer:
+            $ref: "#/components/schemas/Order/properties/customer"
+          order:
+            $ref: "#/components/schemas/Order/properties/order"
+          total:
+            $ref: "#/components/schemas/Order/properties/total"
+    menu:
+      createMenu:
+        properties:
+          name:
+            $ref: "#/components/schemas/Menu/properties/name"
+          description:
+            $ref: "#/components/schemas/Menu/properties/description"
+          image:
+            $ref: "#/components/schemas/Menu/properties/image"
+            required: false
+          price:
+            $ref: "#/components/schemas/Menu/properties/price"
+          dishes:
+            $ref: "#/components/schemas/Menu/properties/dishes"
+          asides:
+            $ref: "#/components/schemas/Menu/properties/asides"
+          drinks:
+            $ref: "#/components/schemas/Menu/properties/drinks"
+      updateMenu:
+        properties:
+          name:
+            $ref: "#/components/schemas/Menu/properties/name"
+            required: false
+          description:
+            $ref: "#/components/schemas/Menu/properties/description"
+            required: false
+          image:
+            $ref: "#/components/schemas/Menu/properties/image"
+            required: false
+          price:
+            $ref: "#/components/schemas/Menu/properties/price"
+            required: false
+          dishes:
+            $ref: "#/components/schemas/Menu/properties/dishes"
+            required: false
+          asides:
+            $ref: "#/components/schemas/Menu/properties/asides"
+            required: false
+          drinks:
+            $ref: "#/components/schemas/Menu/properties/drinks"
+            required: false
+      getMenus:
+        properties:
+          ids:
+            type: array
+            items:
+              $ref: "#/components/common/_id"
+    ingredient:
+      createIngredient:
+        properties:
+          name:
+            $ref: "#/components/schemas/Ingredient/properties/name"
+          description:
+            $ref: "#/components/schemas/Ingredient/properties/description"
+          category:
+            $ref: "#/components/schemas/Ingredient/properties/category"
+          stockLeft:
+            $ref: "#/components/schemas/Ingredient/properties/stockLeft"
+          stockType:
+            $ref: "#/components/schemas/Ingredient/properties/stockType"
+          price:
+            $ref: "#/components/schemas/Ingredient/properties/price"
+      updateIngredient:
+        properties:
+          name:
+            $ref: "#/components/schemas/Ingredient/properties/name"
+            required: false
+          description:
+            $ref: "#/components/schemas/Ingredient/properties/description"
+            required: false
+          category:
+            $ref: "#/components/schemas/Ingredient/properties/category"
+            required: false
+          stockLeft:
+            $ref: "#/components/schemas/Ingredient/properties/stockLeft"
+            required: false
+          stockType:
+            $ref: "#/components/schemas/Ingredient/properties/stockType"
+            required: false
+          price:
+            $ref: "#/components/schemas/Ingredient/properties/price"
+            required: false
+    drink:
+      createDrink:
+        properties:
+          name:
+            $ref: "#/components/schemas/Drink/properties/name"
+          description:
+            $ref: "#/components/schemas/Drink/properties/description"
+          image:
+            $ref: "#/components/schemas/Drink/properties/image"
+            required: false
+          stockLeft:
+            $ref: "#/components/schemas/Drink/properties/stockLeft"
+          sizes:
+            $ref: "#/components/schemas/Drink/properties/sizes"
+      updateDrink:
+        properties:
+          name:
+            $ref: "#/components/schemas/Drink/properties/name"
+            required: false
+          description:
+            $ref: "#/components/schemas/Drink/properties/description"
+            required: false
+          image:
+            $ref: "#/components/schemas/Drink/properties/image"
+            required: false
+          stockLeft:
+            $ref: "#/components/schemas/Drink/properties/stockLeft"
+            required: false
+          sizes:
+            $ref: "#/components/schemas/Drink/properties/sizes"
+            required: false
+      getDrinks:
+        properties:
+          ids:
+            type: array
+            items:
+              $ref: "#/components/common/_id"
+    dish:
+      createDish:
+        properties:
+          name:
+            $ref: "#/components/schemas/Dish/properties/name"
+          description:
+            $ref: "#/components/schemas/Dish/properties/description"
+          price:
+            $ref: "#/components/schemas/Dish/properties/price"
+          image:
+            $ref: "#/components/schemas/Dish/properties/image"
+            required: false
+          category:
+            $ref: "#/components/schemas/Dish/properties/category"
+            required: false
+          ingredients:
+            $ref: "#/components/schemas/Dish/properties/ingredients"
+      updateDish:
+        properties:
+          name:
+            $ref: "#/components/schemas/Dish/properties/name"
+            required: false
+          description:
+            $ref: "#/components/schemas/Dish/properties/description"
+            required: false
+          price:
+            $ref: "#/components/schemas/Dish/properties/price"
+            required: false
+          image:
+            $ref: "#/components/schemas/Dish/properties/image"
+            required: false
+          category:
+            $ref: "#/components/schemas/Dish/properties/category"
+            required: false
+          ingredients:
+            $ref: "#/components/schemas/Dish/properties/ingredients"
+            required: false
+
+  schemas:
+    User:
+      properties:
+        _id:
+          $ref: "#/components/common/_id"
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+          minLength: 8
+          select: false
+        role:
+          type: string
+          enum:
+            - CUSTOMER
+            - ADMIN
+        createdAt:
+          $ref: "#/components/common/createdAt"
+        updatedAt:
+          $ref: "#/components/common/updatedAt"
+    Order:
+      properties:
+        _id:
+          $ref: "#/components/common/_id"
+        customer:
+          $ref: "#/components/common/_id"
+        order:
+          type: array
+          items:
+            type: object
+            properties:
+              _id:
+                $ref: "#/components/common/_id"
+              item:
+                $ref: "#/components/common/_id"
+              type:
+                type: string
+                enum:
+                  - DISH
+                  - DRINK
+                  - MENU
+              quantity:
+                type: number
+                minimum: 1
+              totalPrice:
+                type: number
+                minimum: 0
+              elementsId:
+                type: array
+                items:
+                  $ref: "#/components/common/_id"
+        total:
+          type: number
+        createdAt:
+          $ref: "#/components/common/createdAt"
+    Menu:
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        image:
+          type: string
+          required: false
+        price:
+          type: number
+        dishes:
+          type: array
+          items:
+            type: object
+            properties:
+              _id:
+                $ref: "#/components/common/_id"
+              extraCost:
+                type: number
+                required: false
+              dish:
+                $ref: "#/components/common/_id"
+                description: Dish ID
+        asides:
+          type: array
+          items:
+            type: object
+            properties:
+              _id:
+                $ref: "#/components/common/_id"
+              extraCost:
+                type: number
+                required: false
+              aside:
+                $ref: "#/components/common/_id"
+                description: Dish ID
+        drinks:
+          type: array
+          items:
+            type: object
+            properties:
+              _id:
+                $ref: "#/components/common/_id"
+              extraCost:
+                type: number
+                required: false
+              drink:
+                type: string
+                description: Drink ID
+              size:
+                $ref: "#/components/common/_id"
+                description: Drink size inside the drink
+        createdAt:
+          $ref: "#/components/common/createdAt"
+        updatedAt:
+          $ref: "#/components/common/updatedAt"
+    Ingredient:
+      properties:
+        _id:
+          $ref: "#/components/common/_id"
+        name:
+          type: string
+        description:
+          type: string
+          required: false
+        category:
+          type: string
+        stockLeft:
+          type: number
+        stockType:
+          type: string
+          enum:
+            - UNITS
+            - KILOGRAMS
+            - LITERS
+        price:
+          type: number
+        createdAt:
+          $ref: "#/components/common/createdAt"
+        updatedAt:
+          $ref: "#/components/common/updatedAt"
+    Drink:
+      properties:
+        _id:
+          $ref: "#/components/common/_id"
+        name:
+          type: string
+        description:
+          type: string
+        image:
+          type: string
+          required: false
+        stockLeft:
+          type: number
+        sizes:
+          type: array
+          items:
+            type: object
+            properties:
+              _id:
+                $ref: "#/components/common/_id"
+              name:
+                type: string
+              price:
+                type: number
+              quantity:
+                type: number
+        createdAt:
+          $ref: "#/components/common/createdAt"
+        updatedAt:
+          $ref: "#/components/common/updatedAt"
+    Dish:
+      properties:
+        _id:
+          $ref: "#/components/common/_id"
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        image:
+          type: string
+          required: false
+        category:
+          type: string
+          required: false
+        stockLeft:
+          type: number
+        ingredients:
+          type: array
+          items:
+            type: object
+            properties:
+              _id:
+                $ref: "#/components/common/_id"
+              ingredient:
+                $ref: "#/components/common/_id"
+              quantity:
+                type: number
+        createdAt:
+          $ref: "#/components/common/createdAt"
+        updatedAt:
+          $ref: "#/components/common/updatedAt"
+  securitySchemes:
+    BearerAuth: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT # optional, arbitrary value for documentation purposes

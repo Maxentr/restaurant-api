@@ -8,6 +8,10 @@ import menusRouter from "./src/menus/menus.router"
 import usersRouter from "./src/users/users.router"
 import authRouter from "./src/auth/auth.router"
 import ordersRouter from "./src/orders/orders.router"
+import swaggerUi from 'swagger-ui-express'
+import YAML from 'yamljs'
+
+const swaggerDocument = YAML.load('./swagger.yaml');
 
 server.start()
 const app = server.app
@@ -16,6 +20,7 @@ const api = Router()
 // Routes V1
 const routerV1 = Router()
 
+routerV1.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 routerV1.use("/auth", authRouter)
 routerV1.use("/ingredients", ingredientsRouter)
 routerV1.use("/dishes", dishesRouter)
