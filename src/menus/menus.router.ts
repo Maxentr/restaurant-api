@@ -12,8 +12,8 @@ menusRouter.post("/", validate(CreateMenuSchema), MenusController.create)
 
 // Read all
 menusRouter.get("/", MenusController.findAll)
-menusRouter.get(
-  "/array/:ids",
+menusRouter.post(
+  "/array",
   validate(RouteIdsSchema),
   MenusController.findByArray,
 )

@@ -25,12 +25,10 @@ export class MenusController {
 
   public static async findByArray(req: Request, res: Response) {
     try {
-      const ids: Types.ObjectId[] = req.params.ids
-        .split(",")
-        .map((id) => new Types.ObjectId(id))
-      const dishes = await MenusService.findByArray(ids)
+      const ids: Types.ObjectId[] = req.body.ids
+      const menus = await MenusService.findByArray(ids)
 
-      res.send(dishes)
+      res.send(menus)
     } catch (error) {
       console.log(error)
     }
