@@ -19,7 +19,7 @@ export class AuthController {
 
       // generate the JwtPayload
       const userToken = createJwtPayload(user)
-      console.log(userToken)
+
       // generate the token
       const accessToken = AuthService.createAccessToken(userToken)
       const refreshToken = AuthService.createRefreshToken(userToken)
