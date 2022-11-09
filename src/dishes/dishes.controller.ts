@@ -27,13 +27,9 @@ export class DishesController {
 
   public static async findByArray(req: Request, res: Response) {
     try {
-      const ids: Types.ObjectId[] = req.params.ids
-        .split(",")
-        .map((id) => new Types.ObjectId(id))
+      const ids: Types.ObjectId[] = req.body.ids
 
-      const dishes = await DishesService.findByArray(
-        ids.map((id) => new Types.ObjectId(id)),
-      )
+      const dishes = await DishesService.findByArray(ids)
 
       res.send(dishes)
     } catch (error) {

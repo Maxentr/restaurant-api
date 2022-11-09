@@ -11,8 +11,8 @@ dishesRouter.post("/", validate(CreateDishSchema), DishesController.create)
 
 // Read all
 dishesRouter.get("/", DishesController.findAll)
-dishesRouter.get(
-  "/array/:ids",
+dishesRouter.post(
+  "/array",
   validate(RouteIdsSchema),
   DishesController.findByArray,
 )
