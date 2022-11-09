@@ -27,19 +27,6 @@ export class UsersController {
     }
   }
 
-  public static async findByArray(req: Request, res: Response) {
-    try {
-      const ids: Types.ObjectId[] = req.params.ids
-        .split(",")
-        .map((id) => new Types.ObjectId(id))
-      const users = await UsersService.findByArray(ids)
-
-      res.send(users)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   public static async findOne(req: Request, res: Response) {
     try {
       const id = new Types.ObjectId(req.params.id)

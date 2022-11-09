@@ -22,10 +22,6 @@ export class UsersService {
     return menus
   }
 
-  public static async findByArray(ids: Types.ObjectId[]) {
-    return await User.find({ _id: { $in: ids } }).exec()
-  }
-
   public static async findOne(id: Types.ObjectId) {
     return await User.findById(id).exec()
   }

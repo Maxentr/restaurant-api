@@ -12,11 +12,6 @@ usersRouter.post("/", validate(CreateUserSchema), UsersController.create)
 
 // Read all
 usersRouter.get("/", UsersController.findAll)
-usersRouter.get(
-  "/array/:ids",
-  validate(RouteIdsSchema),
-  UsersController.findByArray,
-)
 
 // Read one
 usersRouter.get("/:id", validate(RouteIdSchema), UsersController.findOne)
