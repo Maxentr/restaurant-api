@@ -5,7 +5,7 @@ const CreateDrinkBody = z.object({
   description: z.string(),
   image: z.string().optional(),
   stockLeft: z.number(),
-  size: z.array(
+  sizes: z.array(
     z.object({
       name: z.string(),
       price: z.number(),

@@ -6,7 +6,7 @@ const UpdateDrinkBody = z.object({
   description: z.string().optional(),
   image: z.string().optional(),
   stockLeft: z.number().optional(),
-  size: z
+  sizes: z
     .array(
       z.object({
         name: z.string(),

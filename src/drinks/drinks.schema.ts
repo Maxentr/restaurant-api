@@ -13,7 +13,7 @@ export type Drink = {
   description: string
   image?: string
   stockLeft: number
-  size: DrinkStockSize[]
+  sizes: DrinkStockSize[]
   createdAt: Date
   updatedAt: Date
 }
@@ -31,7 +31,7 @@ const drinksSchema = new Schema<Drink>({
   description: { type: String, required: true },
   image: String,
   stockLeft: { type: Number, required: true },
-  size: {
+  sizes: {
     type: [DrinkStockSizeSchema],
     required: true,
   },

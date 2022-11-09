@@ -27,11 +27,10 @@ export class DrinksController {
 
   public static async findByArray(req: Request, res: Response) {
     try {
-      const ids: Types.ObjectId[] = req.params.ids
-        .split(",")
-        .map((id) => new Types.ObjectId(req.params.id))
+      const ids: Types.ObjectId[] = req.body.ids
+
       const drinks = await DrinksService.findByArray(ids)
-      console.log(drinks)
+
       res.send(drinks)
     } catch (error) {
       console.log(error)

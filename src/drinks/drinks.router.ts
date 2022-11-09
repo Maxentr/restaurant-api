@@ -12,8 +12,8 @@ drinksRouter.post("/", validate(CreateDrinkSchema), DrinksController.create)
 
 // Read all
 drinksRouter.get("/", DrinksController.findAll)
-drinksRouter.get(
-  "/array/:ids",
+drinksRouter.post(
+  "/array",
   validate(RouteIdsSchema),
   DrinksController.findByArray,
 )
