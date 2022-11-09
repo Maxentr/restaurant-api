@@ -28,6 +28,8 @@ const UserIntegrity = (dataName: string, dataLocation: DataLocation) => {
       const token = authHeader.split(" ")[1]
       const decodedToken = AuthService.verifyAccessToken(token)
 
+      if (decodedToken.role === Role.ADMIN) return next()
+
       if (decodedToken.id === req?.[dataLocation]?.[dataName]) {
         next()
       } else {
