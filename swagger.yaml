@@ -30,8 +30,29 @@ paths:
             application/json:
               schema:
                 accessToken: string
-  /auth/refresh:
+  /auth/verify:
     post:
+      summary: Verify
+      description: Verify the token
+      operationId: verify
+      tags:
+        - auth
+      requestBody:
+        description: Token to verify
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/body/auth/verify"
+      responses:
+        "200":
+          description: Token verified
+          content:
+            application/json:
+              schema:
+                verified: boolean
+  /auth/refresh:
+    get:
       summary: Refresh the accessToken using the refreshToken (cookie)
       description: Refresh the accessToken using the refreshToken (cookie)
       operationId: refresh
@@ -44,6 +65,20 @@ paths:
             application/json:
               schema:
                 accessToken: string
+  /auth/logout:
+    get:
+      summary: Logout
+      description: Logout from the system by removing the refreshToken (cookie)
+      operationId: logout
+      tags:
+        - auth
+      responses:
+        "200":
+          description: Logout successful
+          content:
+            application/json:
+              schema:
+                message: string
 
   /users:
     post:
