@@ -7,6 +7,8 @@ const authRouter = Router()
 
 // Login
 authRouter.post("/login", validate(LoginSchema), AuthController.login)
-authRouter.post("/refresh", AuthController.refresh)
+authRouter.post("/verify", AuthController.verifyAccessToken)
+authRouter.get("/refresh", AuthController.refresh)
+authRouter.get("/logout", AuthController.logout)
 
 export default authRouter

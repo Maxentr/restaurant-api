@@ -39,6 +39,15 @@ export class AuthController {
     }
   }
 
+  public static async verifyAccessToken(req: Request, res: Response) {
+    try {
+      AuthService.verifyAccessToken(req.body.accessToken)
+      res.status(200).json({ isValid: true })
+    } catch (error: unknown) {
+      res.status(400).json({ isValid: false })
+    }
+  }
+
   public static async refresh(req: Request, res: Response) {
     try {
       // Check if the refresh token is present
@@ -68,7 +77,6 @@ export class AuthController {
   }
 
   public static async logout(req: Request, res: Response) {
-    res.clearCookie("accessToken")
     res.clearCookie("refreshToken")
 
     res.status(200).send({ message: "Logged out" })
