@@ -13,7 +13,7 @@ export class DishesService {
   }
 
   public static async findAll() {
-    return await Dish.find().exec()
+    return await Dish.find().populate({ path: "ingredients.ingredient" }).exec()
   }
 
   public static async findByArray(ids: Types.ObjectId[]) {

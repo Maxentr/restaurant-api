@@ -3,7 +3,8 @@ import { Ingredient } from "../ingredients/ingredients.schema"
 
 export type DishIngredient = {
   _id: Types.ObjectId
-  id: Types.ObjectId
+  ingredientId: Types.ObjectId
+  ingredient?: Ingredient
   quantity: number
 }
 
@@ -22,7 +23,11 @@ export type Dish = {
 // Mongooose schema
 // This is an equivalent of Typescript types above
 const DishIngredientSchema = new Schema<DishIngredient>({
-  id: { type: Schema.Types.ObjectId, ref: Ingredient, required: true },
+  ingredient: {
+    type: Schema.Types.ObjectId,
+    ref: Ingredient,
+    required: true,
+  },
   quantity: { type: Number, required: true },
 })
 
