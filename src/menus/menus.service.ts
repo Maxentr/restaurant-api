@@ -32,7 +32,11 @@ export class MenusService {
   }
 
   public static async findOne(id: Types.ObjectId) {
-    return await Menu.findById(id).exec()
+    return await Menu.findById(id)
+      .populate("dishes.dish")
+      .populate("asides.aside")
+      .populate("drinks.drink")
+      .exec()
   }
 
   public static async update(id: Types.ObjectId, updateRequest: UpdateMenu) {
