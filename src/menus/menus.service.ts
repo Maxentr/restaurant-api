@@ -1,4 +1,6 @@
 import { Types } from "mongoose"
+import { DishesService } from "../dishes/dishes.service"
+import { DrinksService } from "../drinks/drinks.service"
 import { Menu } from "./menus.schema"
 import { CreateMenu } from "./validations/create-menu"
 import { UpdateMenu } from "./validations/update-menu"
@@ -42,6 +44,34 @@ export class MenusService {
       },
       { new: true },
     ).exec()
+  }
+
+  public static async decreaseStock(
+    id: Types.ObjectId,
+    choicesId: Types.ObjectId[],
+  ): Promise<void> {
+    const menu = await Menu.findById(id).exec()
+
+    // Decrease stock of dishes selected in the menu
+    menu?.dishes.map(async ({ dish }) => {
+      if (choicesId.includes(dish)) {
+        await DishesService.decreaseStock(dish)
+      }
+    })
+
+    // Decrease stock of asides selected in the menu
+    menu?.asides.map(async ({ aside }) => {
+      if (choicesId.includes(aside)) {
+        await DishesService.decreaseStock(aside)
+      }
+    })
+
+    // Decrease stock of drinks selected in the menu
+    menu?.drinks.map(async ({ drink, size }) => {
+      if (choicesId.includes(drink)) {
+        await DrinksService.decreaseStock(drink, size)
+      }
+    })
   }
 
   public static async remove(id: Types.ObjectId) {
