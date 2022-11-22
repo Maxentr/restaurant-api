@@ -3,8 +3,7 @@ import { Ingredient } from "../ingredients/ingredients.schema"
 
 export type DishIngredient = {
   _id: Types.ObjectId
-  ingredientId: Types.ObjectId
-  ingredient?: Ingredient
+  ingredient: Types.ObjectId | Ingredient
   quantity: number
 }
 
