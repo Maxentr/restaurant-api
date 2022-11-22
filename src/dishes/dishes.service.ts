@@ -1,4 +1,5 @@
 import { Types } from "mongoose"
+import { IngredientsService } from "../ingredients/ingredients.service"
 import { Dish } from "./dishes.schema"
 import { CreateDish } from "./validations/create-dish"
 import { UpdateDish } from "./validations/update-dish"
@@ -33,6 +34,19 @@ export class DishesService {
       },
       { new: true },
     ).exec()
+  }
+
+  public static async decreaseStock(id: Types.ObjectId): Promise<void> {
+    const dish = await Dish.findById(id).exec()
+    console.log(dish)
+
+    if (dish) {
+      dish.ingredients.map(
+        async ({ ingredient, quantity }) =>
+          ingredient instanceof Types.ObjectId &&
+          (await IngredientsService.decreaseStock(ingredient, quantity)),
+      )
+    }
   }
 
   public static async remove(id: Types.ObjectId) {
