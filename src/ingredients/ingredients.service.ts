@@ -38,6 +38,17 @@ export class IngredientsService {
     ).exec()
   }
 
+  public static async decreaseStock(
+    id: Types.ObjectId,
+    quantity: number,
+  ): Promise<void> {
+    await Ingredient.findByIdAndUpdate(id, {
+      $inc: {
+        stockLeft: -quantity,
+      },
+    }).exec()
+  }
+
   public static async remove(id: Types.ObjectId) {
     return await Ingredient.findByIdAndDelete(id).exec()
   }
