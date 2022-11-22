@@ -2,17 +2,34 @@ import { z } from "zod"
 import { objectId } from "../../../utils/generic-schema"
 import { OrderItemType } from "../orders.schema"
 
-const OrderItemSchema = z.object({
-  item: objectId,
+const OrderItemDefaultSchema = {
   type: z.nativeEnum(OrderItemType),
   quantity: z.number(),
   totalPrice: z.number(),
-  elementsId: z.array(objectId).optional(),
+}
+
+const OrderItemMenuSchema = z.object({
+  ...OrderItemDefaultSchema,
+  menu: objectId,
+  choicesId: z.array(objectId),
+})
+
+const OrderItemDishSchema = z.object({
+  ...OrderItemDefaultSchema,
+  dish: objectId,
+})
+
+const OrderItemDrinkSchema = z.object({
+  ...OrderItemDefaultSchema,
+  drink: objectId,
+  sizeId: objectId,
 })
 
 const CreateOrderBody = z.object({
   customer: objectId,
-  order: z.array(OrderItemSchema),
+  items: z.array(
+    OrderItemMenuSchema || OrderItemDishSchema || OrderItemDrinkSchema,
+  ),
   total: z.number(),
 })
 
