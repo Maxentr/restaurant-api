@@ -37,6 +37,24 @@ export class DrinksService {
     ).exec()
   }
 
+  public static async decreaseStock(
+    id: Types.ObjectId,
+    sizeId: Types.ObjectId,
+    quantity: number = 1,
+  ): Promise<void> {
+    await Drink.findByIdAndUpdate(
+      id,
+      {
+        $inc: {
+          [`sizes.$[size].stock`]: -quantity,
+        },
+      },
+      {
+        arrayFilters: [{ "size._id": sizeId }],
+      },
+    ).exec()
+  }
+
   public static async remove(id: Types.ObjectId) {
     return await Drink.findByIdAndDelete(id).exec()
   }
