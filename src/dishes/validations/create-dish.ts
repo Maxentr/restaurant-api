@@ -9,7 +9,7 @@ const CreateDishBody = z.object({
   category: z.string().optional(),
   ingredients: z.array(
     z.object({
-      id: objectId,
+      ingredient: objectId,
       quantity: safeNumber(),
     }),
   ),
