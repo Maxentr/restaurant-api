@@ -35,21 +35,21 @@ export type Menu = {
 
 // Mongooose schema
 // This is an equivalent of Typescript types above
-const MenuChoiceSchema = new Schema<MenuChoice>({
+const MenuChoiceSchema = {
   extraCost: { type: Number, required: false },
-})
+}
 const MenuDrinkChoiceSchema = new Schema<MenuDrinkChoice>({
   drink: { type: Schema.Types.ObjectId, ref: Drink, required: true },
   size: { type: Schema.Types.ObjectId, required: true },
-  extraCost: MenuChoiceSchema,
+  extraCost: MenuChoiceSchema.extraCost,
 })
 const MenuDishChoiceSchema = new Schema<MenuDishChoice>({
   dish: { type: Schema.Types.ObjectId, ref: Dish, required: true },
-  extraCost: MenuChoiceSchema,
+  extraCost: MenuChoiceSchema.extraCost,
 })
 const MenuAsideChoiceSchema = new Schema<MenuAsideChoice>({
   aside: { type: Schema.Types.ObjectId, ref: Dish, required: true },
-  extraCost: MenuChoiceSchema,
+  extraCost: MenuChoiceSchema.extraCost,
 })
 
 const menusSchema = new Schema<Menu>({
