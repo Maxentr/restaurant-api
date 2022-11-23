@@ -1,5 +1,9 @@
 # Restaurant API
 
+## TODO
+
+- [ ] Add a fail2ban filter for the API
+
 ## Pre-requisites
 
 - Node.js (I use v16.17.1)
@@ -28,7 +32,7 @@ pnpm run start
 
 ## API Documentation
 
-The API documentation uses Swagger. To access it, go to http://localhost:3000/api/v1/docs/.
+The API documentation uses Swagger. To access it, go to http://localhost:3000/docs/.
 
 ## Convention
 
