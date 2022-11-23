@@ -1,17 +1,17 @@
 import { z } from "zod"
-import { ParamIdSchema } from "../../../utils/generic-schema"
+import { ParamIdSchema, safeNumber } from "../../../utils/generic-schema"
 
 const UpdateDrinkBody = z.object({
   name: z.string().optional(),
   description: z.string().optional(),
   image: z.string().optional(),
-  stockLeft: z.number().optional(),
+  stockLeft: safeNumber().optional(),
   sizes: z
     .array(
       z.object({
         name: z.string(),
-        price: z.number(),
-        quantity: z.number(),
+        price: safeNumber(),
+        quantity: safeNumber(),
       }),
     )
     .optional(),

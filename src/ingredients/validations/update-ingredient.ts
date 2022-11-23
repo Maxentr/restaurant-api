@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { objectId, ParamIdSchema } from "../../../utils/generic-schema"
+import { safeNumber, ParamIdSchema } from "../../../utils/generic-schema"
 import { StockType } from "../ingredients.schema"
 
 const UpdateIngredientBody = z.object({
@@ -9,9 +9,9 @@ const UpdateIngredientBody = z.object({
     .string()
     .transform((value) => value.toLowerCase())
     .optional(),
-  stockLeft: z.number().optional(),
+  stockLeft: safeNumber().optional(),
   stockType: z.nativeEnum(StockType).optional(),
-  price: z.number().optional(),
+  price: safeNumber().optional(),
 })
 
 const UpdateIngredientSchema = z.object({

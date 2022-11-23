@@ -1,12 +1,12 @@
 import { z } from "zod"
-import { objectId } from "../../../utils/generic-schema"
+import { objectId, safeNumber } from "../../../utils/generic-schema"
 import { MenuAsideChoice, MenuDishChoice, MenuDrinkChoice } from "./common"
 
 const CreateMenuBody = z.object({
   name: z.string(),
   description: z.string(),
   image: z.string().optional(),
-  price: z.number(),
+  price: safeNumber(),
   dishes: MenuDishChoice,
   asides: MenuAsideChoice,
   drinks: MenuDrinkChoice,

@@ -1,13 +1,14 @@
 import { z } from "zod"
+import { safeNumber } from "../../../utils/generic-schema"
 import { StockType } from "../ingredients.schema"
 
 const CreateIngredientBody = z.object({
   name: z.string(),
   description: z.string().optional(),
   category: z.string().transform((value) => value.toLowerCase()),
-  stockLeft: z.number(),
+  stockLeft: safeNumber(),
   stockType: z.nativeEnum(StockType).optional(),
-  price: z.number(),
+  price: safeNumber(),
 })
 
 const CreateIngredientSchema = z.object({

@@ -1,17 +1,17 @@
 import { z } from "zod"
-import { objectId, ParamIdSchema } from "../../../utils/generic-schema"
+import { objectId, ParamIdSchema, safeNumber } from "../../../utils/generic-schema"
 
 const UpdateDishBody = z.object({
   name: z.string().optional(),
   description: z.string().optional(),
-  price: z.number().optional(),
+  price: safeNumber().optional(),
   image: z.string().optional(),
   category: z.string().optional(),
   ingredients: z
     .array(
       z.object({
         id: objectId,
-        quantity: z.number(),
+        quantity: safeNumber(),
       }),
     )
     .optional(),

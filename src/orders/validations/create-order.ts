@@ -1,11 +1,11 @@
 import { z } from "zod"
-import { objectId } from "../../../utils/generic-schema"
+import { objectId, safeNumber } from "../../../utils/generic-schema"
 import { OrderItemType } from "../orders.schema"
 
 const OrderItemDefaultSchema = {
   type: z.nativeEnum(OrderItemType),
-  quantity: z.number(),
-  totalPrice: z.number(),
+  quantity: safeNumber(),
+  totalPrice: safeNumber(),
 }
 
 const OrderItemMenuSchema = z.object({
@@ -30,7 +30,7 @@ const CreateOrderBody = z.object({
   items: z.array(
     OrderItemMenuSchema || OrderItemDishSchema || OrderItemDrinkSchema,
   ),
-  total: z.number(),
+  total: safeNumber(),
 })
 
 const CreateOrderSchema = z.object({

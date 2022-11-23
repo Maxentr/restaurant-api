@@ -1,15 +1,16 @@
 import { z } from "zod"
+import { safeNumber } from "../../../utils/generic-schema"
 
 const CreateDrinkBody = z.object({
   name: z.string(),
   description: z.string(),
   image: z.string().optional(),
-  stockLeft: z.number(),
+  stockLeft: safeNumber(),
   sizes: z.array(
     z.object({
       name: z.string(),
-      price: z.number(),
-      quantity: z.number(),
+      price: safeNumber(),
+      quantity: safeNumber(),
     }),
   ),
 })
