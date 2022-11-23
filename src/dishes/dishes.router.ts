@@ -4,6 +4,7 @@ import { validate } from "../../utils/validation"
 import Auth from "../auth/auth.middleware"
 import { DishesController } from "./dishes.controller"
 import { CreateDishSchema } from "./validations/create-dish"
+import { UpdateDishSchema } from "./validations/update-dish"
 
 const dishesRouter = Router()
 
@@ -30,7 +31,7 @@ dishesRouter.get("/:id", validate(RouteIdSchema), DishesController.findOne)
 dishesRouter.patch(
   "/:id",
   Auth("ADMIN"),
-  validate(RouteIdSchema),
+  validate(UpdateDishSchema),
   DishesController.update,
 )
 
