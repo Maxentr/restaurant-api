@@ -21,9 +21,11 @@ class Server {
     res: Response,
     next: NextFunction,
   ) {
-    res.header("Access-Control-Allow-Origin", "*")
+    res.header("Origin", process.env.APP_URL)
+    res.header("Access-Control-Allow-Origin", process.env.APP_URL)
     res.header("Access-Control-Allow-Methods", "GET,PUT, PATCH,POST,DELETE")
-    res.header("Access-Control-Allow-Headers", "Content-Type")
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    res.header("Access-Control-Allow-Credentials", "true")
 
     next()
   }
