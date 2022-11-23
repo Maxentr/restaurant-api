@@ -775,6 +775,11 @@ components:
             format: password
             minLength: 8
             example: "aaaaaaaaa"
+      verify:
+        type: object
+        properties:
+          accessToken:
+            type: string
     user:
       createUser:
         properties:
@@ -806,7 +811,7 @@ components:
           customer:
             $ref: "#/components/schemas/Order/properties/customer"
           items:
-            $ref: "#/components/schemas/Order/properties/order"
+            $ref: "#/components/schemas/Order/properties/items"
           total:
             $ref: "#/components/schemas/Order/properties/total"
     menu:
@@ -965,6 +970,12 @@ components:
           ingredients:
             $ref: "#/components/schemas/Dish/properties/ingredients"
             required: false
+      getDishes:
+        properties:
+          ids:
+            type: array
+            items:
+              $ref: "#/components/common/_id"
 
   schemas:
     User:
@@ -1089,7 +1100,7 @@ components:
                 type: number
                 required: false
               drink:
-                type: string
+                $ref: "#/components/common/_id"
                 description: Drink ID
               size:
                 $ref: "#/components/common/_id"
