@@ -17,10 +17,12 @@ server.start()
 const app = server.app
 const api = Router()
 
+// Put Swagger at the root of the API
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 // Routes V1
 const routerV1 = Router()
 
-routerV1.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 routerV1.use("/auth", authRouter)
 routerV1.use("/ingredients", ingredientsRouter)
 routerV1.use("/dishes", dishesRouter)
