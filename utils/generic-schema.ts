@@ -8,7 +8,8 @@ const objectId = z.string().refine((value) => Types.ObjectId.isValid(value), {
 
 const safeNumber = () =>
   z.preprocess(
-    (a) => (typeof a === "number" ? a : parseInt(z.string().parse(a), 10)),
+    (a) =>
+      typeof a === "number" ? a : Number(parseFloat(z.string().parse(a)).toFixed(2)),
     z.number(),
   )
 
