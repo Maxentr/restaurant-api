@@ -6,6 +6,12 @@ const objectId = z.string().refine((value) => Types.ObjectId.isValid(value), {
   message: "Invalid id",
 })
 
+const safeNumber = () =>
+  z.preprocess(
+    (a) => (typeof a === "number" ? a : parseInt(z.string().parse(a), 10)),
+    z.number(),
+  )
+
 const ParamIdSchema = z.object({
   id: objectId,
 })
@@ -24,6 +30,7 @@ const RouteIdsSchema = z.object({
 
 export {
   objectId,
+  safeNumber,
   ParamIdSchema,
   RouteIdSchema,
   BodyIdsSchema,
