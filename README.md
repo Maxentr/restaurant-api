@@ -9,6 +9,7 @@
 
 - Node.js (I use v16.17.1)
 - MongoDB (I use v6.0.1)
+- Redis (I use v7.0.0)
 - ssh-keygen
 
 ## Installation
@@ -21,7 +22,7 @@ pnpm run init
 
 It will install all the dependencies and create a jwt folder with keys in it (used for authentication).
 
-Then create a .env file in the root directory and add the variables.
+Then copy each .env example file in the config folder and fill the variables.
 
 ## Usage
 
