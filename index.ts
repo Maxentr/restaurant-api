@@ -1,37 +1,13 @@
 import { server } from "./src/server"
-import { Router } from "express"
+import { config } from "dotenv"
 
-import ingredientsRouter from "./src/ingredients/ingredients.router"
-import dishesRouter from "./src/dishes/dishes.router"
-import drinksRouter from "./src/drinks/drinks.router"
-import menusRouter from "./src/menus/menus.router"
-import usersRouter from "./src/users/users.router"
-import authRouter from "./src/auth/auth.router"
-import ordersRouter from "./src/orders/orders.router"
-import swaggerUi from 'swagger-ui-express'
-import YAML from 'yamljs'
+// Import environment variables
+config()
+config({ path: ".env" })
 
-const swaggerDocument = YAML.load('./swagger.yaml');
-
+if (process.env.NODE_ENV === "production") {
+  config({ path: ".env.rate-limit" })
+}
+console.clear()
+console.log("\x1b[1m\x1b[33m🚀 Starting server...")
 server.start()
-const app = server.app
-const api = Router()
-
-// Put Swagger at the root of the API
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-// Routes V1
-const routerV1 = Router()
-
-routerV1.use("/auth", authRouter)
-routerV1.use("/ingredients", ingredientsRouter)
-routerV1.use("/dishes", dishesRouter)
-routerV1.use("/drinks", drinksRouter)
-routerV1.use("/menus", menusRouter)
-routerV1.use("/users", usersRouter)
-routerV1.use("/orders", ordersRouter)
-
-// Add versionning to api routes
-api.use("/v1", routerV1)
-// Add "api" prefix to app
-app.use("/api", api)
