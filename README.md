@@ -2,7 +2,8 @@
 
 ## TODO
 
-- [ ] Add a fail2ban filter for the API
+- [x] Add a limit rate to the API
+- [ ] ?
 
 ## Pre-requisites
 
