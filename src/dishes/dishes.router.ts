@@ -4,6 +4,7 @@ import { validate } from "../../utils/validation"
 import Auth from "../auth/auth.middleware"
 import { DishesController } from "./dishes.controller"
 import { CreateDishSchema } from "./validations/create-dish"
+import { findAllByCategorySchema } from "./validations/find-category"
 import { UpdateDishSchema } from "./validations/update-dish"
 
 const dishesRouter = Router()
@@ -18,6 +19,11 @@ dishesRouter.post(
 
 // Read all
 dishesRouter.get("/", DishesController.findAll)
+dishesRouter.get(
+  "/category/:category",
+  validate(findAllByCategorySchema),
+  DishesController.findAllByCategory,
+)
 dishesRouter.post(
   "/array",
   validate(RouteIdsSchema),
