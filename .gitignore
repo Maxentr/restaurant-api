@@ -1,6 +1,10 @@
 node_modules
 dist
-.env
 .eslintcache
 .DS_Store
 jwt
+
+# Environment variables
+.env
+.env.*
+!.*.example

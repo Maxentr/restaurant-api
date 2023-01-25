@@ -25,6 +25,16 @@ export class DishesController {
     }
   }
 
+  public static async findAllByCategory(req: Request, res: Response) {
+    try {
+      const dishes = await DishesService.findAllByCategory(req.params.category)
+
+      res.send(dishes)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   public static async findByArray(req: Request, res: Response) {
     try {
       const ids: Types.ObjectId[] = req.body.ids

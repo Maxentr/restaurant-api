@@ -17,6 +17,10 @@ export class DishesService {
     return await Dish.find().populate({ path: "ingredients.ingredient" }).exec()
   }
 
+  public static async findAllByCategory(category: string) {
+    return await Dish.find({ category }).exec()
+  }
+
   public static async findByArray(ids: Types.ObjectId[]) {
     return await Dish.find({ _id: { $in: ids } }).exec()
   }
